@@ -1,97 +1,107 @@
-// Subway Surfers Clone - Main Game Logic
-
-const game = document.getElementById("game");
-const player = document.getElementById("player");
-const scoreText = document.getElementById("score");
-
-let currentLane = 1; // 0=left, 1=center, 2=right
+const track = document.getElementById('track');
+const scoreEl = document.getElementById('score');
+let playerLane = 1; // 0=left, 1=center, 2=right
 let score = 0;
 let gameOver = false;
 
-// Lane positions (3 lanes)
-const lanes = [40, 155, 270]; // left, center, right
+let player = { lane: 1, y: 85 };
 
-// Player ko move karna
-function movePlayer(direction) {
-  if (gameOver) return;
-
-  if (direction === "left" && currentLane > 0) {
-    currentLane--;
-  }
-  if (direction === "right" && currentLane < 2) {
-    currentLane++;
-  }
-  if (direction === "up") {
-    // Jump effect
-    player.style.bottom = "120px";
-    setTimeout(() => {
-      player.style.bottom = "30px";
-    }, 400);
-  }
-
-  player.style.left = lanes[currentLane] + "px";
+// Player banao
+function createPlayer() {
+    const p = document.createElement('div');
+    p.id = 'player';
+    p.style.position = 'absolute';
+    p.style.width = '18%';
+    p.style.height = '10%';
+    p.style.background = 'yellow';
+    p.style.bottom = '10%';
+    p.style.borderRadius = '5px';
+    p.style.transition = '0.2s';
+    p.style.left = '41%';
+    p.innerText = '😎';
+    p.style.textAlign = 'center';
+    track.appendChild(p);
+    return p;
 }
 
-// Keyboard controls
-document.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowLeft") movePlayer("left");
-  if (e.key === "ArrowRight") movePlayer("right");
-  if (e.key === "ArrowUp") movePlayer("up");
+let playerEl = createPlayer();
+
+function movePlayer(dir) {
+    if (gameOver) return;
+    if (dir === 'left' && playerLane > 0) playerLane--;
+    if (dir === 'right' && playerLane < 2) playerLane++;
+    updatePlayerPos();
+}
+
+function updatePlayerPos() {
+    const positions = ['10%', '41%', '72%'];
+    playerEl.style.left = positions[playerLane];
+    player.lane = playerLane;
+}
+
+// Controls
+document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') movePlayer('left');
+    if (e.key === 'ArrowRight') movePlayer('right');
 });
 
-// Touch / Swipe for mobile
+// Touch / Swipe for Mobile
 let startX = 0;
-game.addEventListener("touchstart", (e) => {
-  startX = e.touches[0].clientX;
-});
-game.addEventListener("touchend", (e) => {
-  let endX = e.changedTouches[0].clientX;
-  if (startX - endX > 50) movePlayer("left"); // swipe left
-  if (endX - startX > 50) movePlayer("right"); // swipe right
+track.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+track.addEventListener('touchend', e => {
+    let endX = e.changedTouches[0].clientX;
+    if (endX - startX > 50) movePlayer('right');
+    if (startX - endX > 50) movePlayer('left');
 });
 
-// Obstacle (Train) banana
-function createObstacle() {
-  if (gameOver) return;
+// Tap left/right side
+track.addEventListener('click', e => {
+    const rect = track.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    if (x < rect.width / 2) movePlayer('left');
+    else movePlayer('right');
+});
 
-  const obstacle = document.createElement("div");
-  obstacle.classList.add("obstacle");
-  obstacle.innerHTML = "🚂"; // Train emoji
+// Obstacles
+function spawnObstacle() {
+    if (gameOver) return;
+    const lane = Math.floor(Math.random() * 3);
+    const obs = document.createElement('div');
+    obs.className = 'obstacle';
+    obs.style.position = 'absolute';
+    obs.style.width = '18%';
+    obs.style.height = '10%';
+    obs.style.background = 'red';
+    obs.style.top = '-15%';
+    const positions = ['10%', '41%', '72%'];
+    obs.style.left = positions[lane];
+    obs.dataset.lane = lane;
+    obs.innerText = '🚂';
+    obs.style.textAlign = 'center';
+    track.appendChild(obs);
 
-  let lane = Math.floor(Math.random() * 3); // Random lane
-  obstacle.style.left = lanes[lane] + "px";
-  obstacle.style.top = "-80px";
-  game.appendChild(obstacle);
+    let y = -15;
+    let fall = setInterval(() => {
+        if (gameOver) { clearInterval(fall); obs.remove(); return; }
+        y += 2;
+        obs.style.top = y + '%';
 
-  let topPos = -80;
-  let interval = setInterval(() => {
-    if (gameOver) {
-      clearInterval(interval);
-      return;
-    }
+        // COLLISION FIX - Yehi asal fix hai Hero!
+        if (y > 75 && y < 90 && parseInt(obs.dataset.lane) === playerLane) {
+            gameOver = true;
+            alert('GAME OVER! Hero Score: ' + score);
+            location.reload();
+        }
 
-    topPos += 5; // Speed
-    obstacle.style.top = topPos + "px";
-
-    // Collision check
-    if (topPos > 450 && topPos < 560 && lane === currentLane && player.style.bottom === "30px") {
-      gameOver = true;
-      alert("Game Over! Score: " + score);
-      location.reload(); // Restart game
-    }
-
-    // Score badhao jab obstacle neeche chala jaye
-    if (topPos > 600) {
-      clearInterval(interval);
-      obstacle.remove();
-      score += 10;
-      scoreText.innerText = "Score: " + score;
-    }
-  }, 20);
+        if (y > 100) {
+            clearInterval(fall);
+            obs.remove();
+            if (!gameOver) {
+                score += 10;
+                scoreEl.innerText = 'Score: ' + score;
+            }
+        }
+    }, 30);
 }
 
-// Har 1.5 second me naya obstacle
-setInterval(createObstacle, 1500);
-
-// Initial score
-scoreText.innerText = "Score: 0";
+setInterval(spawnObstacle, 1200);
