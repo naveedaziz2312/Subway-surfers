@@ -1,77 +1,54 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
 body {
   margin: 0;
-  padding: 0;
-  background: linear-gradient(#87CEEB, #E0F6FF);
+  background: linear-gradient(to bottom, #87CEEB, #E0F6FF);
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   overflow: hidden;
-  font-family: Arial, sans-serif;
+  font-family: Arial;
 }
-
-#game {
-  width: 360px;
-  height: 600px;
-  background: #555;
-  position: relative;
-  overflow: hidden;
-  border-radius: 15px;
-  border: 4px solid #222;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-  /* 3 tracks wala road */
-  background-image: 
-    linear-gradient(90deg, #333 2px, transparent 2px),
-    linear-gradient(90deg, #333 2px, transparent 2px),
-    linear-gradient(#666, #444);
-  background-size: 120px 100%, 240px 100%, 100% 100%;
-}
-
-#player {
-  width: 50px;
-  height: 70px;
-  background: #FFD700;
-  position: absolute;
-  bottom: 30px;
-  left: 155px; /* center lane */
-  border-radius: 10px 10px 5px 5px;
-  border: 2px solid #000;
-  transition: all 0.2s ease;
-  z-index: 10;
-}
-
-/* Player ke upar cap jaisa look */
-#player::after {
-  content: "🏃";
-  font-size: 40px;
-  position: absolute;
-  top: -5px;
-  left: 2px;
-}
-
-.obstacle {
-  width: 50px;
-  height: 70px;
-  background: #FF4444;
-  position: absolute;
-  top: -80px;
-  border-radius: 5px;
-  border: 2px solid #000;
+#game-container {
+  width: 100%;
+  max-width: 400px;
+  height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
-  font-size: 35px;
 }
-
+#track {
+  position: relative;
+  width: 90%;
+  height: 100%;
+  background: #4a4a4a;
+  border-left: 4px solid #333;
+  border-right: 4px solid #333;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+#track::before {
+  content: '';
+  position: absolute;
+  left: 33%;
+  width: 2px;
+  height: 100%;
+  background: #666;
+}
+#track::after {
+  content: '';
+  position: absolute;
+  left: 66%;
+  width: 2px;
+  height: 100%;
+  background: #666;
+}
 #score {
   position: absolute;
-  top: 15px;
-  left: 15px;
+  top: 10px;
+  left: 10px;
   background: white;
-  padding: 8px 15px;
+  padding: 5px 15px;
   border-radius: 20px;
   font-weight: bold;
-  font-size: 18px;
-  z-index: 20;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.3);
-}
+  z-index: 10;
+  }
