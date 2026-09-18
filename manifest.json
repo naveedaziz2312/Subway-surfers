@@ -1,11 +1,12 @@
 {
-  "name": "Subway Surfers - Hero Game",
-  "short_name": "Subway Game",
+  "name": "Subway Surfers - By Naveed Aziz",
+  "short_name": "Naveed Game",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#ffcc00",
-  "description": "Endless Subway Runner Game - Run, Jump, Collect Coins!",
+  "description": "Subway Surfers Game Developed By Naveed Aziz - Endless Runner",
+  "author": "Naveed Aziz",
   "icons": [
     {
       "src": "icon.png",
