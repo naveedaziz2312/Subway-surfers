@@ -2,18 +2,38 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Subway Surfers Hero</title>
-<link rel="icon" type="image/png" href="icon.png">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Subway Hero - Real Run</title>
+<link rel="icon" href="icon.png">
 <link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div id="game-container">
+  <div id="top-bar">
+    <div class="badge" id="score">💰 0</div>
+    <div class="badge" id="level">Lvl 1</div>
+    <div class="badge" id="pauseBtn">⚙️</div>
+  </div>
   <div id="track">
-    <div id="score">Score: 0</div>
+    <div class="lane"></div><div class="lane"></div><div class="lane"></div>
+  </div>
+  <div id="gameOver" class="overlay">
+    <h1>💀 GAME OVER</h1>
+    <p id="finalScore">Score 0</p>
+    <p id="highScore">Best 0</p>
+    <button id="restartBtn">🔄 Phir Khelo</button>
+    <button id="shareBtn" style="background:linear-gradient(#25D366,#128C7E)">📤 Doston Ko Bhejo</button>
+  </div>
+  <div id="pauseMenu" class="overlay">
+    <h1>⚙️ SETTING</h1>
+    <div class="setting-item"><span>🔊 Sound</span><span id="soundToggle">ON</span></div>
+    <div class="setting-item"><span>⚡ Speed</span><span id="speedToggle">Normal</span></div>
+    <div class="setting-item"><span>🎮 Level</span><span id="levelInfo">1</span></div>
+    <button id="resumeBtn">▶️ Resume</button>
+    <div class="row"><button id="restartBtn2">🔄 Restart</button><button id="shareBtn2" style="background:linear-gradient(#25D366,#128C7E)">📤 Share</button></div>
   </div>
 </div>
 <script src="script.js"></script>
 </body>
-</html>
+                                                         </html>
