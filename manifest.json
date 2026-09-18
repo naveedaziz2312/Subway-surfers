@@ -1,10 +1,10 @@
 {
-  "name": "Subway Surfers - Hero Game",
+  "name": "Subway Surfers Hero",
   "short_name": "Surfers",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#000000",
-  "theme_color": "#00ffcc",
+  "theme_color": "#ffcc00",
   "icons": [
     {
       "src": "icon.png",
