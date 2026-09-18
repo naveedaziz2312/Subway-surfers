@@ -1,10 +1,11 @@
 {
-  "name": "Subway Surfers Hero",
-  "short_name": "Surfers",
+  "name": "Subway Surfers - Hero Game",
+  "short_name": "Subway Game",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#ffcc00",
+  "description": "Endless Subway Runner Game - Run, Jump, Collect Coins!",
   "icons": [
     {
       "src": "icon.png",
